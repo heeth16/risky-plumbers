@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
@@ -9,8 +8,17 @@ import (
 	"github.com/heeth16/risky-plumbers/pkg/api"
 )
 
+// main is the entry point for the Risk Server.
+//
+// It creates a new RiskStore and a new GorillaServerOptions instance.
+// The GorillaServerOptions are configured as follows:
+// - BaseURL is set to "/v1"
+// - BaseRouter is set to a new mux.Router.
+// - Middlewares is set to a slice containing the MiddlewareContentTypeJSON function.
+//
+// It then calls the HandlerWithOptions function to get a handler for the server.
+// Finally, it creates a new http.Server instance and calls ListenAndServe on it.
 func main() {
-	fmt.Println("Starting Risk Server")
 	store := api.NewRiskStore()
 	options := api.GorillaServerOptions{
 		BaseURL:     "/v1",

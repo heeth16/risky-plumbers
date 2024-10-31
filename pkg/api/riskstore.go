@@ -23,6 +23,9 @@ func NewRiskStore() *RiskStore {
 	}
 }
 
+// GetRisks retrieves a list of Risks.
+//
+// It responds with a JSON body containing all stored Risks and a 200 OK status code.
 func (rs *RiskStore) GetRisks(w http.ResponseWriter, r *http.Request) {
 	rs.Lock()
 	defer rs.Unlock()
@@ -36,6 +39,11 @@ func (rs *RiskStore) GetRisks(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(risks)
 }
 
+// PostRisks creates a new Risk based on the provided request body.
+//
+// It responds with a JSON body containing the auto-generated UUID of the created Risk and a 201 Created status code.
+// If the request body is not valid JSON, it responds with a 400 Bad Request status code.
+// If the Risk in the request body is invalid, it responds with a 400 Bad Request status code.
 func (rs *RiskStore) PostRisks(w http.ResponseWriter, r *http.Request) {
 	if r.Header.Get("Content-Type") != "application/json" {
 		returnRiskStoreResponse(w, http.StatusBadRequest, "Invalid Content-Type format. Supported is application/json")
@@ -65,7 +73,7 @@ func (rs *RiskStore) PostRisks(w http.ResponseWriter, r *http.Request) {
 		State:       RiskState(newRisk.State),
 	}
 
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(struct { // Unnamed struct
 		ID uuid.UUID
 	}{
@@ -73,6 +81,10 @@ func (rs *RiskStore) PostRisks(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+// GetRisksId retrieves an individual Risk by its UUID.
+//
+// It responds with a JSON body containing the Risk and a 200 OK status code.
+// If the Risk ID is not found, it responds with a 400 Bad Request status code.
 func (rs *RiskStore) GetRisksId(w http.ResponseWriter, r *http.Request, id openapi_types.UUID) {
 	rs.Lock()
 	defer rs.Unlock()
