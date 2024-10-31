@@ -29,7 +29,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RiskCreate'
+              $ref: '#/components/schemas/RiskRequest'
       responses:
         '201':
           description: Risk created successfully.
@@ -90,7 +90,7 @@ components:
         - title
         - description
 
-    RiskCreate:
+    RiskRequest:
       type: object
       properties:
         state:

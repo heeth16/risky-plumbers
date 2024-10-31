@@ -20,12 +20,12 @@ const (
 	RiskStateOpen          RiskState = "open"
 )
 
-// Defines values for RiskCreateState.
+// Defines values for RiskRequestState.
 const (
-	RiskCreateStateAccepted      RiskCreateState = "accepted"
-	RiskCreateStateClosed        RiskCreateState = "closed"
-	RiskCreateStateInvestigating RiskCreateState = "investigating"
-	RiskCreateStateOpen          RiskCreateState = "open"
+	RiskRequestStateAccepted      RiskRequestState = "accepted"
+	RiskRequestStateClosed        RiskRequestState = "closed"
+	RiskRequestStateInvestigating RiskRequestState = "investigating"
+	RiskRequestStateOpen          RiskRequestState = "open"
 )
 
 // Risk defines model for Risk.
@@ -46,23 +46,23 @@ type Risk struct {
 // RiskState The state of the Risk.
 type RiskState string
 
-// RiskCreate defines model for RiskCreate.
-type RiskCreate struct {
+// RiskRequest defines model for RiskRequest.
+type RiskRequest struct {
 	// Description The description of the Risk.
 	Description string `json:"description"`
 
 	// State The state of the Risk (required).
-	State RiskCreateState `json:"state"`
+	State RiskRequestState `json:"state"`
 
 	// Title The title of the Risk.
 	Title string `json:"title"`
 }
 
-// RiskCreateState The state of the Risk (required).
-type RiskCreateState string
+// RiskRequestState The state of the Risk (required).
+type RiskRequestState string
 
 // PostRisksJSONRequestBody defines body for PostRisks for application/json ContentType.
-type PostRisksJSONRequestBody = RiskCreate
+type PostRisksJSONRequestBody = RiskRequest
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {

@@ -2,7 +2,7 @@ package api
 
 import "errors"
 
-func (rs *RiskCreate) validate() error {
+func (rs *RiskRequest) validate() error {
 	if len(rs.Title) == 0 {
 		return errors.New("risk ritle is required")
 	}
@@ -15,7 +15,7 @@ func (rs *RiskCreate) validate() error {
 		return errors.New("risk state is required")
 	}
 
-	if rs.State != RiskCreateStateOpen && rs.State != RiskCreateStateAccepted && rs.State != RiskCreateStateClosed && rs.State != RiskCreateStateInvestigating {
+	if rs.State != RiskRequestStateOpen && rs.State != RiskRequestStateAccepted && rs.State != RiskRequestStateClosed && rs.State != RiskRequestStateInvestigating {
 		return errors.New("allowed risk states are [open, closed, accepted, investigating]")
 	}
 

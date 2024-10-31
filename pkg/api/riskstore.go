@@ -33,7 +33,7 @@ func (rs *RiskStore) PostRisks(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var newRisk RiskCreate
+	var newRisk RiskRequest
 	if err := json.NewDecoder(r.Body).Decode(&newRisk); err != nil {
 		raiseRiskStoreError(w, http.StatusBadRequest, "Invalid format for Risk")
 		return
