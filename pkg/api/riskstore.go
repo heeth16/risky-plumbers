@@ -24,7 +24,7 @@ func NewRiskStore() *RiskStore {
 }
 
 func (rs *RiskStore) GetRisks(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Calling GetRisks\n"))
+
 }
 
 func (rs *RiskStore) PostRisks(w http.ResponseWriter, r *http.Request) {
@@ -65,5 +65,14 @@ func (rs *RiskStore) PostRisks(w http.ResponseWriter, r *http.Request) {
 }
 
 func (rs *RiskStore) GetRisksId(w http.ResponseWriter, r *http.Request, id openapi_types.UUID) {
-	w.Write([]byte("Calling GetRisks\n"))
+	rs.Lock()
+	defer rs.Unlock()
+
+	if _, ok := rs.Risks[id]; !ok {
+		returnRiskStoreResponse(w, http.StatusBadRequest, "Risk ID not found")
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(rs.Risks[id])
 }
