@@ -11,13 +11,14 @@ import (
 
 func main() {
 	fmt.Println("Starting Risk Server")
-	server := api.NewRiskStore()
+	store := api.NewRiskStore()
 	options := api.GorillaServerOptions{
-		BaseURL:    "/v1",
-		BaseRouter: mux.NewRouter(),
+		BaseURL:     "/v1",
+		BaseRouter:  mux.NewRouter(),
+		Middlewares: []api.MiddlewareFunc{api.MiddlewareContentTypeJSON},
 	}
 
-	hander := api.HandlerWithOptions(server, options)
+	hander := api.HandlerWithOptions(store, options)
 
 	s := &http.Server{
 		Handler: hander,
