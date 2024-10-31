@@ -6,20 +6,16 @@ import (
 )
 
 // Error defines model for Error.
-type Error struct {
-	// Code Error code
-	Code int32 `json:"code"`
-
+type Response struct {
 	// Message Error message
 	Message string `json:"message"`
 }
 
-func raiseRiskStoreError(w http.ResponseWriter, code int, message string) {
-	err := Error{
-		Code:    int32(code),
+func returnRiskStoreResponse(w http.ResponseWriter, statusCode int, message string) {
+	err := Response{
 		Message: message,
 	}
 
-	w.WriteHeader(code)
+	w.WriteHeader(statusCode)
 	_ = json.NewEncoder(w).Encode(err)
 }

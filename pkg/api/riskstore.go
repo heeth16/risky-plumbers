@@ -29,18 +29,18 @@ func (rs *RiskStore) GetRisks(w http.ResponseWriter, r *http.Request) {
 
 func (rs *RiskStore) PostRisks(w http.ResponseWriter, r *http.Request) {
 	if r.Header.Get("Content-Type") != "application/json" {
-		raiseRiskStoreError(w, http.StatusBadRequest, "Invalid Content-Type format. Supported is application/json")
+		returnRiskStoreResponse(w, http.StatusBadRequest, "Invalid Content-Type format. Supported is application/json")
 		return
 	}
 
 	var newRisk RiskRequest
 	if err := json.NewDecoder(r.Body).Decode(&newRisk); err != nil {
-		raiseRiskStoreError(w, http.StatusBadRequest, "Invalid format for Risk")
+		returnRiskStoreResponse(w, http.StatusBadRequest, "Invalid format for Risk")
 		return
 	}
 
 	if err := newRisk.validate(); err != nil {
-		raiseRiskStoreError(w, http.StatusBadRequest, err.Error())
+		returnRiskStoreResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
