@@ -24,7 +24,16 @@ func NewRiskStore() *RiskStore {
 }
 
 func (rs *RiskStore) GetRisks(w http.ResponseWriter, r *http.Request) {
+	rs.Lock()
+	defer rs.Unlock()
 
+	risks := make([]*Risk, 0, len(rs.Risks))
+	for _, val := range rs.Risks {
+		risks = append(risks, &val)
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(risks)
 }
 
 func (rs *RiskStore) PostRisks(w http.ResponseWriter, r *http.Request) {
