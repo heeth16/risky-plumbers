@@ -1,0 +1,6 @@
+# To generate the Server Stubs use: oapi-codegen --config=config.yml ../../spec.yml
+package: api
+generate:
+  gorilla-server: true
+  models: true
+output: risk.gen.go
